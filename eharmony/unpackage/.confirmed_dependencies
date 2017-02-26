@@ -1,0 +1,252 @@
+{
+	"login.html": {
+		"resources": [
+			"js/mui.min.js",
+			"css/mui.min.css",
+			"fonts/mui.ttf",
+			"img/logo5.png",
+			"js/app.js",
+			"js/mui.enterfocus.js",
+			"img/logo3.png",
+			"js/jQuery.md5.js",
+			"js/jquery.min.js",
+			"js/base.js"
+		],
+		"refer": [
+			"reg.html",
+			"list.html",
+			"main.html",
+			"unlock.html"
+		]
+	},
+	"reg.html": {
+		"resources": [
+			"fonts/mui.ttf",
+			"js/mui.min.js",
+			"css/mui.min.css"
+		],
+		"refer": [
+			"login.html"
+		]
+	},
+	"list.html": {
+		"resources": [
+			"js/mui.min.js",
+			"css/mui.min.css",
+			"fonts/mui.ttf",
+			"img/xf.png",
+			"img/xnw.png",
+			"img/cbd.png",
+			"img/xmw.png"
+		],
+		"refer": [
+			"login.html",
+			"changeuserinfo.html"
+		]
+	},
+	"changeuserinfo.html": {
+		"resources": [
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"css/mui.min.css"
+		],
+		"refer": []
+	},
+	"main.html": {
+		"resources": [
+			"img/cbd.png",
+			"img/xf.png",
+			"img/xmw.png",
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"css/mui.min.css",
+			"js/app.js",
+			"img/tx.png"
+		],
+		"refer": [
+			"login.html",
+			"changeuserinfo.html",
+			"angulartest.html",
+			"projectup.html",
+			"EmployeesReport.html",
+			"projectUpSearch.html",
+			"projectUpSearchOne.html",
+			"EmployeesReportOne.html",
+			"projectUpOne.html"
+		]
+	},
+	"unlock.html": {
+		"resources": [
+			"js/mui.locker.js"
+		],
+		"refer": []
+	},
+	"angulartest.html": {
+		"resources": [
+			"js/angular-1.0.1.min.js",
+			"js/app.js",
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"css/mui.min.css"
+		],
+		"refer": []
+	},
+	"projectup.html": {
+		"resources": [
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"css/mui.min.css",
+			"js/mui.picker.min.js",
+			"css/mui.picker.min.css",
+			"js/base.js",
+			"projectUpOne.html"
+		],
+		"refer": [
+			"login.html",
+			"projectUpOne.html"
+		]
+	},
+	"EmployeesReport.html": {
+		"resources": [
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"css/mui.min.css",
+			"personEmployeesReport.html",
+			"main.html",
+			"EmployeesReportOne.html",
+			"js/base.js",
+			"css/mui.picker.min.css",
+			"js/mui.picker.min.js"
+		],
+		"refer": [
+			"personEmployeesReport.html",
+			"main.html",
+			"projectUpSearch.html",
+			"projectup.html",
+			"personEmployeesReportPost.html",
+			"EmployeesReportOne.html"
+		]
+	},
+	"projectUpSearch.html": {
+		"resources": [
+			"css/mui.picker.min.css",
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"css/mui.min.css",
+			"projectUpDetail.html",
+			"js/angular-1.0.1.min.js",
+			"projectUpSearchOne.html",
+			"js/base.js",
+			"js/mui.picker.min.js",
+			"js/jquery.min.js"
+		],
+		"refer": [
+			"projectUpDetail.html",
+			"projectup.html",
+			"EmployeesReport.html",
+			"login.html",
+			"projectUpSearchOne.html"
+		]
+	},
+	"personEmployeesReport.html": {
+		"resources": [
+			"js/mui.picker.min.js",
+			"css/mui.picker.min.css",
+			"EmployeesReport.html",
+			"js/angular-1.0.1.min.js",
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"css/mui.min.css",
+			"js/jquery.min.js",
+			"js/base.js",
+			"js/angular.min.js"
+		],
+		"refer": [
+			"EmployeesReport.html",
+			"personEmployeesReportPost.html"
+		]
+	},
+	"projectUpDetail.html": {
+		"resources": [
+			"js/mui.picker.min.js",
+			"projectUpSearch.html",
+			"main.html",
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"css/mui.min.css",
+			"css/mui.picker.min.css",
+			"projectUpSearchOne.html",
+			"js/base.js"
+		],
+		"refer": [
+			"projectUpSearch.html",
+			"main.html",
+			"projectUpSearchOne.html"
+		]
+	},
+	"projectUpSearchOne.html": {
+		"resources": [
+			"js/mui.min.js",
+			"projectUpSearch.html",
+			"fonts/mui.ttf",
+			"js/angular-1.0.1.min.js",
+			"css/mui.min.css",
+			"css/mui.picker.min.css",
+			"js/jquery.min.js",
+			"projectUpDetail.html",
+			"js/base.js"
+		],
+		"refer": [
+			"projectUpSearch.html",
+			"login.html",
+			"projectUpDetail.html"
+		]
+	},
+	"personEmployeesReportPost.html": {
+		"resources": [
+			"js/mui.picker.min.js",
+			"js/jquery.min.js",
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"js/angular-1.0.1.min.js",
+			"css/mui.min.css",
+			"css/mui.picker.min.css",
+			"js/baseApp.js",
+			"js/base.js",
+			"js/angular.min.js"
+		]
+	},
+	"EmployeesReportOne.html": {
+		"resources": [
+			"js/angular-1.0.1.min.js",
+			"css/mui.picker.min.css",
+			"js/jquery.min.js",
+			"EmployeesReport.html",
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"css/mui.min.css",
+			"js/base.js"
+		],
+		"refer": [
+			"EmployeesReport.html",
+			"personEmployeesReport.html",
+			"login.html"
+		]
+	},
+	"projectUpOne.html": {
+		"resources": [
+			"js/base.js",
+			"projectup.html",
+			"js/jquery.min.js",
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"js/angular-1.0.1.min.js",
+			"css/mui.min.css",
+			"css/mui.picker.min.css"
+		],
+		"refer": [
+			"projectup.html",
+			"login.html"
+		]
+	}
+}

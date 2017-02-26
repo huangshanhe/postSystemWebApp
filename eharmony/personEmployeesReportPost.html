@@ -1,0 +1,451 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>eharmony</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<!--标准mui.css-->
+		<link rel="stylesheet" href="css/mui.min.css">
+		<!--App自定义的css-->
+		<link rel="stylesheet" type="text/css" href="css/app.css" />
+		<link rel="stylesheet" type="text/css" href="css/mui.picker.min.css" />
+		<script type="text/javascript" src="js/base.js" ></script>
+		<script type="text/javascript" src="js/angular.min.js" ></script>
+		<script type="text/javascript" src="js/jquery.min.js"></script>
+		
+	</head>
+	<body ng-app="infoApp" ng-controller="controller">
+
+		<style>
+			.mui-control-content {
+				background-color: white;
+				min-height: 480px;
+			}
+			.mui-control-content .mui-loading {
+				margin-top: 50px;
+			}
+			.mui-input-row label{
+				width: 135px;
+				text-align: left;
+			}
+			.mui-input-row input{
+				margin-left: -10px;
+			}
+			.mui-input-row textarea{
+				margin: 5px;
+			}
+			
+			.mui-content {
+				height: 0px;
+				margin: 0px;
+				background-color: #efeff4;
+			}
+			h5.mui-content-padded {
+				margin-left: 3px;
+				margin-top: 20px !important;
+			}
+			h5.mui-content-padded:first-child {
+				margin-top: 12px !important;
+			}
+			.mui-btn {
+				font-size: 16px;
+				padding: 8px;
+				margin: 3px;
+			}
+			.ui-alert {
+				text-align: center;
+				padding: 20px 10px;
+				font-size: 16px;
+			}
+			* {
+				-webkit-touch-callout: none;
+				-webkit-user-select: none;
+			}
+		</style>
+		<header class="mui-bar mui-bar-nav">
+			<span ng-click="close()" class="mui-icon mui-icon-left-nav mui-pull-left" style="color: #007AFF;"></span>
+			<h1 class="mui-title">员工产量上报</h1>
+		</header>
+		<div class="mui-content">
+			<div id="slider" class="mui-slider">
+				<div id="sliderSegmentedControl" class="mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
+			<a class="mui-control-item" href="#item1mobile">
+				基本信息
+			</a>
+			<a class="mui-control-item" href="#item2mobile">
+				日产量
+			</a>
+		</div>
+			<div id="sliderProgressBar" class="mui-slider-progress-bar mui-col-xs-6"></div>
+				<div class="mui-slider-group">
+					<div id="item1mobile" class="mui-slider-item mui-control-content mui-active">
+						<!--<div id="scroll1" class="mui-scroll-wrapper">-->
+							<div class="mui-scroll">
+								<ul class="mui-table-view">
+									
+				<div class="mui-input-row">
+				<tr>					
+				<label><span style="color: #CF2D28;">*</span>项目名称:</label>
+				<!--<input type="text" id="projectName" class="mui-input-clear" placeholder="请输入上报人姓名" required="required" value="网新颐和">-->
+				<div style="margin-top: 9px;">
+				<span style="margin-left: 1px;" id="projectName"></span>
+				</div>
+				</div>
+					<hr>
+				</tr>
+				<div class="mui-input-row">
+					<label><span  style="color: #CF2D28;">*</span>上报日期:</label>
+				<!--<button style="border: none;margin-left: -19px;margin-top:3px;"  id='postdate' data-options='{"type":"date","beginYear":2015,"endYear":2018}' class="btn">2016-10-24</button>-->
+				<div style="margin-top: 9px;">
+				<span style="margin-left: 1px;" id="reportDate" ng-model="recordTime"></span>
+				</div>
+				</div>
+				<hr>
+				<div class="mui-input-row">
+					<label><span style="color: #CF2D28;">*</span>上报人姓名:</label>
+					<!--<input type="text" id="postpeople" class="mui-input-clear" placeholder="请输入上报人姓名" required="required" value="黄山河">-->
+				<div style="margin-top: 9px;">
+				<span style="margin-left: 1px;" id="reportName"></span>
+				</div>
+				</div>
+				<hr>
+				<div class="mui-input-row">
+					<label><span style="color: #CF2D28;">*</span>员工姓名:</label>
+					<!--<input type="text" id="phone" class="mui-input-clear" placeholder="请输入员工姓名" required="required" value="黄山河">-->
+					<div style="margin-top: 9px;">
+				<span  style="margin-left: 1px;"  id="reportUser"></span>
+				</div>
+				</div>
+				<hr>
+				<div class="mui-input-row">
+					<label><span style="color: #CF2D28;">*</span>考核标准:</label>
+					<div style="margin-top: 9px;">
+						<span id="completionRate"></span>
+					</div>
+				</div>
+				<hr>
+				<div class="mui-input-row mui-checkbox mui-center" style="margin-right: 180px;">
+					<label>是否计件:</label>
+					<input id="isCalculationStr" name="checkbox" value="false" type="checkbox" >
+				<span  style="margin-left: 5px;visibility: hidden;"  id="pepleId"></span>
+				</div>
+				<hr>
+				<div class="mui-input-row mui-checkbox mui-center" style="margin-right: 180px;">
+						<label>是否旷工:</label>
+						<input id="absenteeism" name="checkbox" value="false" type="checkbox" >
+				</div>
+				<hr>
+					<div class="mui-input-row">
+					<label>请假时长:</label>
+					<input type="text" id="leaveTime" ng-model="leaveTime" class="mui-input-clear" placeholder="" required="required">
+				<!--<div style="margin-top: 9px;">
+				<span id="leaveTime"></span>
+				</div>-->
+					</div>
+				<hr>
+				<div class="mui-input-row">
+					<label>请假原因:</label>
+					<input type="text" id="leaveInfo" class="mui-input-clear" placeholder="" required="required">
+				<!--<div style="margin-top: 9px;">
+				<span id="leaveInfo"></span>
+				</div>-->
+				</div>
+				<hr>
+				</ul>
+			</div>
+		<!--</div>-->
+	</div>
+					<div id="item2mobile" class="mui-slider-item mui-control-content">
+						<div id="scroll2" class="mui-scroll-wrapper" style="overflow-y: scroll;clear:both;">
+						<div style="margin-bottom:109px;height: auto;" ng-repeat="item in standardList">
+						<div style="clear:both;height: auto;">	
+							<div align="center" style="clear:both;margin-top: 10px;"><span ng-bind="'类型：' + item.industry.itemName + ' ' + item.docType + ' ' + item.docYears">
+								</span>
+							</div>
+							<div style="margin-top:12px;border:1px solid #000;">
+								<input id="standardName" readonly="readonly" style="font-size:15px; width: 23%;text-align: center;background-color: transparent;border: hidden;" value="工序名称"></input>
+								<input id="standardName" readonly="readonly" style="font-size:15px; width: 23%;text-align: center;background-color: transparent;border: hidden;" value="人日定额"></input>
+								<input id="standardName" readonly="readonly" style="font-size:15px; width: 26%;text-align: center;background-color: transparent;border: hidden;" value="实际完成定额"></input>
+								<input id="standardName" readonly="readonly" style="font-size:15px; width: 23%;text-align: center;background-color: transparent;border: hidden;" value="完成率"></input>
+							</div>
+								<div class="mui-scroll" style="clear:both;overflow-y: scroll;height: 95px;">
+								<span ng-repeat="procedure in item.standarProcedure" >	
+								<div style="clear:both;border-bottom:1px solid #000;">
+										<input id="standardName" readonly="readonly" style="color:black;font-size:15px; width: 23%;text-align: center;background-color: transparent;border: hidden;" value="{{procedure.name}}"></input>
+										<input id="currentDayStandard" readonly="readonly" style="color:black;font-size:15px; width: 23%;text-align: center;background-color: transparent;border: hidden;" value="{{procedure.number + '(' + procedure.company + ')'}}"></input>
+										<input id="actualYield{{$index}}" ng-model="projectYield[procedure.id].actualYield"  style="color:black;font-size:15px; width: 26%;text-align: center;background-color: transparent;height:15px;margin:0px;" type="text"></input>
+										<input ng-show="projectYield[procedure.id].actualYield!=null" readonly="readonly" style="color:black;font-size:15px; width:23%;text-align: center;background-color: transparent;border: hidden;" value="{{((projectYield[procedure.id].actualYield/procedure.number )*100).toFixed(0)}}%"></input>
+								</div>
+								</span>
+								</div>
+						</div>
+						</div>	
+						</div>
+					</div>
+				</div>
+				<div class="mui-content-padded" align="center">
+				<button ng-click="up()" type="button" id="post" class="mui-btn mui-btn-blue" style="margin-top: 10px;">上报</button>
+			</div>
+			</div>
+		</div>
+		<script src="js/mui.min.js"></script>
+		<script src="js/mui.picker.min.js"></script>
+		<script src="js/baseApp.js"></script>
+		<script src="js/layer.js"></script>
+		<script>
+			mui.init({
+				swipeBack: false,
+				
+		//局部刷新的监听
+//		beforeback: function(){//获得列表界面的webview
+//		var list = plus.webview.getWebviewById('EmployeesReport');
+//		mui.fire(list,'refresh');//触发列表界面的自定义事件（refresh）,从而进行数据刷新
+//		return true;//返回true，继续页面关闭逻辑
+//		}
+			});
+				mui.plusReady(function(){
+				})
+			//时间选择器+页卡
+			(function($) {
+				$.init();
+				var result = $('#result')[0];
+				var btns = $('.btn');
+				btns.each(function(i, btn) {
+					btn.addEventListener('tap', function() {
+						var optionsJson = this.getAttribute('data-options') || '{}';
+						var options = JSON.parse(optionsJson);
+						var id = this.getAttribute('id');
+						/*
+						 * 首次显示时实例化组件
+						 * 示例为了简洁，将 options 放在了按钮的 dom 上
+						 * 也可以直接通过代码声明 optinos 用于实例化 DtPicker
+						 */
+						var picker = new $.DtPicker(options);
+						picker.show(function(rs) {
+							/*
+							 * rs.value 拼合后的 value
+							 * rs.text 拼合后的 text
+							 * rs.y 年，可以通过 rs.y.vaue 和 rs.y.text 获取值和文本
+							 * rs.m 月，用法同年
+							 * rs.d 日，用法同年
+							 * rs.h 时，用法同年
+							 * rs.i 分（minutes 的第二个字母），用法同年
+							 */
+							postdate.innerText = rs.text;
+							postdate.value = rs.text;
+							/* 
+							 * 返回 false 可以阻止选择框的关闭
+							 * return false;
+							 */
+							/*
+							 * 释放组件资源，释放后将将不能再操作组件
+							 * 通常情况下，不需要示放组件，new DtPicker(options) 后，可以一直使用。
+							 * 当前示例，因为内容较多，如不进行资原释放，在某些设备上会较慢。
+							 * 所以每次用完便立即调用 dispose 进行释放，下次用时再创建新实例。
+							 */
+							picker.dispose();
+						});
+					}, false);
+				});
+				
+				//上报成功后的myBack
+				
+				//防止mui.back循环
+				//mui._back
+				//是否旷工
+				mui('.mui-checkbox').on('change', 'input', function() {
+				var value = this.checked?"true":"false";
+				var absenteeism = document.getElementById("absenteeism");
+				absenteeism.value = value;
+				});
+				//接收上一个页面的参数
+				var userName = localStorage.getItem("UserName");//上报人admin1
+				var selectProjectName = localStorage.getItem("ProjectName");//当前项目
+				//var selectPeopleId = plus.storage.getItem("selectPeopleId");//人员数字顺位
+				var data = localStorage.getItem("PeopeleUpDate");//当前日期
+				var projectId = localStorage.getItem("PeopleUpProjectId");//项目ID
+				//project.value=projectId;
+				//var reportId = plus.storage.getItem("reportId");//上报记录ID
+				//表单赋值
+				projectName.innerText=selectProjectName;
+				reportDate.innerText=data;
+				reportName.innerText=userName;
+				//提交按钮
+				
+				var post = document.getElementById("post");
+				var userList = [];
+				mui.ajax(base+'/personaldayYield/findPeopleReportStates', {
+						data: {
+							'checkDate':data,
+	    					'personaldayYield.project.id':projectId//应该是projectId
+						},
+						dataType: 'json',
+						type: 'POST',
+						async: false,
+						timeout: 5000,
+						success: function(data) {
+							var PeopleId = localStorage.getItem("PeopleId");
+							for(i=0;i<data.length;i++){
+								if(PeopleId==data[i].people.id){
+									var selectPeopleId = i;
+								}
+							}
+							if(data[selectPeopleId].completionRate!=null){
+								completionRate.innerText=data[selectPeopleId].completionRate+"%";
+							}else{
+								completionRate.innerText="%";
+							}
+						var isCalculationStr = document.getElementById("isCalculationStr");
+							if(data[selectPeopleId].isCalculationStr!="否"){
+								isCalculationStr.setAttribute('checked','checked');
+							}
+						reportUser.innerText=data[selectPeopleId].people.name;
+						localStorage.setItem("peopleID",data[selectPeopleId].people.id.toString());
+						},
+						error: function(data) {
+						}
+					});	
+					
+				var projecName = document.getElementById("projectname");
+				var postDate = document.getElementById("postdate");
+				var postPeople = document.getElementById("postpeople");
+				var post = document.getElementById("post");
+				var peopleId = localStorage.getItem("peopleID");
+				var isCalculationStr = document.getElementById("isCalculationStr");
+				var leaveTime = document.getElementById("leaveTime");
+				var leaveInfo =document.getElementById("leaveInfo");
+				var actualYield =document.getElementById("actualYield");
+				var reportID = document.getElementById("reportID");//上报id
+			
+				
+				//页卡
+				$('.mui-scroll-wrapper').scroll({
+					indicators: true //是否显示滚动条
+				});
+				var html2 = '<div class="mui-input-row"><label>出勤人数:</label><input type="text" id="password" class="mui-input-clear" placeholder="请输入出勤人数" required="required"></div><hr>'
+				+'<div class="mui-input-row"><label>请假人数:</label><input type="text" id="repassword" class="mui-input-clear" placeholder="请输入请假人数" required="required"></div><hr>'
+				+'<div class="mui-input-row"><label>请假人姓名:</label><input type="text" id="phone" class="mui-input-clear" placeholder="请输入请假人姓名" required="required"></div><hr>'
+				+'<div class="mui-input-row"><label>项目问题:</label><input type="text" id="password" class="mui-input-clear" placeholder="请输入项目问题" required="required"></div><hr>'
+				+'<div class="mui-input-row"><span style="margin-left:15px;">备注:</span><textarea style="text-align: left;height:121px;width:350px;" type="text" id="repassword" class="mui-input-clear" placeholder="说点什么.." required="required"></textarea></div>';
+				var item2 = document.getElementById('item2mobile');
+				document.getElementById('slider').addEventListener('slide', function(e) {
+						if (item2.querySelector('.mui-loading')) {
+							setTimeout(function() {
+								item2.querySelector('.mui-scroll').innerHTML = html2;
+							}, 500);
+						}
+				});
+				var sliderSegmentedControl = document.getElementById('sliderSegmentedControl');
+				$('.mui-input-group').on('change', 'input', function() {
+					if (this.checked) {
+						sliderSegmentedControl.className = 'mui-slider-indicator mui-segmented-control mui-segmented-control-inverted mui-segmented-control-' + this.value;
+						//force repaint
+						sliderProgressBar.setAttribute('style', sliderProgressBar.getAttribute('style'));
+					}
+				});
+			})(mui);
+			
+			//angular
+			/**
+ * Created by hsh on 2016/8/19.
+ */
+//angularjs post 提交时HTTP头设置
+var transform = function (data) {
+    return $.param(data);
+}, postCfg = {
+    headers: {
+        'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+    },
+    transformRequest: transform
+};
+
+var app = angular.module('infoApp', []);
+app.controller('controller', function ($scope,$http) {
+	//定额IDLIST
+	var projectStandardIdList = [];
+	//var projectYield = [];
+	//获取projectId-延迟忽略
+	var myBack = function(){
+				//mui.fire(plus.webview.getWebviewById('EmployeesReport'), 'reload', null);
+                mui.openWindow({
+						url: 'EmployeesReport.html',
+						id: 'EmployeesReport.html'
+					});
+				}
+	setTimeout(
+		function post(){
+		//$scope.projectYield[0].actualYield=0;
+		var PeopleUpProjectId = localStorage.getItem("PeopleUpProjectId");
+		var reportDetail = {
+		'proId':PeopleUpProjectId
+	 	}
+		$http.post(base+'/proStandard/findProStandardsByProId',reportDetail,postCfg)
+	    	.success(function(data){
+	    	$scope.projectYield = [];//开始赋值
+	    	$scope.standardList=data;
+	    	for(j=0;j<data.length;j++){
+	    		projectStandardIdList.push(data[j].id);
+	    	 }
+	    	});
+	    },6
+		);
+		
+	//提交按钮数据获取与测试
+	var PeopeleUpDate = localStorage.getItem("PeopeleUpDate");//上报日期	
+	var UserName = localStorage.getItem("UserName");//上报人姓名（登录者）
+	var PeopleId = localStorage.getItem("PeopleId");//员工ID
+	var PeopleUpProjectId = localStorage.getItem("PeopleUpProjectId");//项目ID
+	//关闭Layer show
+	$scope.close = function(){
+	var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+    parent.layer.close(index);
+	}
+	$scope.up = function(){
+		var leaveTime = document.getElementById("leaveTime").value;//请假天数
+		var leaveInfo = document.getElementById("leaveInfo").value;//请假原因
+		var isCalculationStr = document.getElementById("isCalculationStr").value;//是否计件
+		//var actualYield = document.getElementById("actualYield0").value;//实际完成
+		//var reportID = document.getElementById("reportID").value;//定额ID
+		var absenteeism = document.getElementById("absenteeism").value;//是否旷工
+			$scope.projectYields = {
+				"personaldayYield.recordTime" :PeopeleUpDate,  //上报日期
+				"personaldayYield.recordUser" :UserName, //上报人姓名amdin1
+				"personaldayYield.user.id" :  PeopleId,//员工ID
+				"personaldayYield.project.id" :PeopleUpProjectId,//项目ID
+				"personaldayYield.isCalculationStr":isCalculationStr,//是否计件
+				"personaldayYield.leaveTime":leaveTime,//请假天数
+				"personaldayYield.absenteeism":absenteeism,//是否旷工
+				"personaldayYield.leaveInfo":leaveInfo//请假原因
+	    		}
+	var i=0;
+	angular.forEach($scope.projectYield, function(data,index,array){
+							  $scope.projectYields["personaldayYield.projectYields["+i+"].projectStandardProcedure.id"]=index; 
+							  $scope.projectYields["personaldayYield.projectYields["+i+"].actualYield"]=data.actualYield;
+							  i++;
+						});
+
+				$http.post(base+'/personaldayYield/addPersonaldayYield',$scope.projectYields,postCfg)
+			     .success(function(data){
+			     	if(data.errorMessage!=null){
+			     		mui.toast(data.errorMessage);
+			     	}else{
+			     		window.parent.mui.toast("上报成功");
+			     		localStorage.setItem("ifRefresh","yes");
+			     		$scope.close();
+			     		//mui.back();
+			     		//var ws =  plus.webview.currentWebview();
+						//plus.webview.close(ws);
+                  		//myBack();
+                  		//history.replaceState({},"员工产量上报","EmployeesReport.html");
+                  		//history.go(-1);
+                  		//window.history.back(-1);
+			     	}
+			     });
+	      }
+	});
+		</script>
+	</body>
+</html>

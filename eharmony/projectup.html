@@ -1,0 +1,453 @@
+﻿<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>eharmony</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<!--标准mui.css-->
+		<link rel="stylesheet" href="css/mui.min.css">
+		<!--App自定义的css-->
+		<script type="text/javascript" src="js/base.js" ></script>
+		<link rel="stylesheet" type="text/css" href="css/app.css" />
+		<link rel="stylesheet" type="text/css" href="css/mui.picker.min.css" />
+	</head>
+
+	<body>
+
+		<style>
+			.mui-control-content {
+				background-color: white;
+				min-height: 433px;
+			}
+			.mui-control-content .mui-loading {
+				margin-top: 50px;
+			}
+			.mui-input-row label{
+				width: 135px;
+				text-align: left;
+			}
+			.mui-input-row input{
+				margin-left: -10px;
+			}
+			.mui-input-row textarea{
+				margin: 5px;
+			}
+			
+			.mui-content {
+				height: 0px;
+				margin: 0px;
+				background-color: #efeff4;
+			}
+			h5.mui-content-padded {
+				margin-left: 3px;
+				margin-top: 20px !important;
+			}
+			h5.mui-content-padded:first-child {
+				margin-top: 12px !important;
+			}
+			.mui-btn {
+				font-size: 16px;
+				padding: 8px;
+				margin: 3px;
+			}
+			.ui-alert {
+				text-align: center;
+				padding: 20px 10px;
+				font-size: 16px;
+			}
+			* {
+				-webkit-touch-callout: none;
+				-webkit-user-select: none;
+			}
+		</style>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">项目产量上报</h1>
+		</header>
+		<div class="mui-content">
+			<div id="slider" class="mui-slider">
+				<div id="sliderSegmentedControl" class="mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
+					<a class="mui-control-item" href="#item1mobile">
+				表单1
+			</a>
+					<a class="mui-control-item" href="#item2mobile">
+				表单2
+			</a>
+					<a class="mui-control-item" href="#item3mobile">
+				表单3
+			</a>
+				</div>
+				<div id="sliderProgressBar" class="mui-slider-progress-bar mui-col-xs-4"></div>
+				<div class="mui-slider-group">
+					<div id="item1mobile" class="mui-slider-item mui-control-content mui-active">
+						<div id="scroll1" class="mui-scroll-wrapper">
+							<div class="mui-scroll">
+								<ul class="mui-table-view">
+									
+				<div class="mui-input-row">
+				<tr>					
+				<label>项目名称:</label>
+				<div style="margin-top: 9px;">
+				<span id="projectname" style="margin-left: -8px;"></span>
+				</div>
+<!--					<input type="text" id="projectname" class="mui-input-clear" value="网新颐和" required="required">-->
+				</div>
+					<hr>
+				</tr>
+				<div class="mui-input-row">
+					<label><span style="color: #CF2D28;">*</span>上报日期:</label>
+				<button style="border: none;margin-left: -19px;margin-top:3px;"  id='postdate' data-options='{"type":"date","beginYear":2006,"endYear":2026}' class="btn">请选择日期</button>
+				</div>
+				<hr>
+				<div class="mui-input-row">
+					<label>上报人:</label>
+					<!--<input type="text" id="postpeople" class="mui-input-clear" placeholder="请输入上报人姓名" required="required">-->
+					<div style="margin-top: 9px;">
+					<span id="postpeople"></span>				
+					</div>	
+				</div>
+				<hr>
+				<div class="mui-input-row">
+					<label>日打印卷数:</label>
+					<input type="text" id="dfmdy" class="mui-input-clear" placeholder="请输入日封面打印卷数" required="required">
+				</div>
+				<hr>
+				<div class="mui-input-row">
+					<label>总打印卷数:</label>
+					<input type="text" id="zfmdy" class="mui-input-clear" placeholder="请输入总封面打印卷数" required="required">
+				</div>
+				<hr>
+				<div class="mui-input-row">
+					<label>日扫描页数:</label>
+					<input type="text" id="dsaomiao" class="mui-input-clear" placeholder="请输入日扫描页数" required="required">
+				</div>
+				<hr>
+				<div class="mui-input-row">
+					<label>总扫描页数:</label>
+					<input type="text" id="zsaomiao" class="mui-input-clear" placeholder="请输入总扫描页数" required="required">
+				</div>
+				<hr>
+				<div class="mui-input-row">
+					<label>日整理卷数:</label>
+					<input type="text" id="rizhengli" class="mui-input-clear" placeholder="请输入日整理卷数" required="required">
+				</div>
+				<hr>
+								</ul>
+							</div>
+						</div>
+						
+					</div>
+					<div id="item2mobile" class="mui-slider-item mui-control-content">
+						<div id="scroll2" class="mui-scroll-wrapper">
+							<div class="mui-scroll">
+								<div class="mui-loading">
+									<div class="mui-spinner">
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div id="item3mobile" class="mui-slider-item mui-control-content">
+						<div id="scroll3" class="mui-scroll-wrapper">
+							<div class="mui-scroll">
+								<div class="mui-loading">
+									<div class="mui-spinner">
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			<div class="mui-content-padded" align="center">
+				<button type="button" id="reg" class="mui-btn mui-btn-blue" style="margin-top: 10px;">上报</button>
+			</div>
+				
+			</div>
+		</div>
+		<script src="js/mui.min.js"></script>
+		<script src="js/mui.picker.min.js"></script>
+		<script>
+			mui.init({
+				swipeBack: false
+			});
+				mui.plusReady(function(){
+						})//plusReady闭合
+			//时间选择器+页卡
+			(function($) {
+				$.init();
+				var result = $('#result')[0];
+				var btns = $('.btn');
+				btns.each(function(i, btn) {
+					btn.addEventListener('tap', function() {
+						var optionsJson = this.getAttribute('data-options') || '{}';
+						var options = JSON.parse(optionsJson);
+						var id = this.getAttribute('id');
+						/*
+						 * 首次显示时实例化组件
+						 * 示例为了简洁，将 options 放在了按钮的 dom 上
+						 * 也可以直接通过代码声明 optinos 用于实例化 DtPicker
+						 */
+						var picker = new $.DtPicker(options);
+						picker.show(function(rs) {
+							/*
+							 * rs.value 拼合后的 value
+							 * rs.text 拼合后的 text
+							 * rs.y 年，可以通过 rs.y.vaue 和 rs.y.text 获取值和文本
+							 * rs.m 月，用法同年
+							 * rs.d 日，用法同年
+							 * rs.h 时，用法同年
+							 * rs.i 分（minutes 的第二个字母），用法同年
+							 */
+							postdate.innerText = rs.text;
+							postdate.value = rs.text;
+							/* 
+							 * 返回 false 可以阻止选择框的关闭
+							 * return false;
+							 */
+							/*
+							 * 释放组件资源，释放后将将不能再操作组件
+							 * 通常情况下，不需要示放组件，new DtPicker(options) 后，可以一直使用。
+							 * 当前示例，因为内容较多，如不进行资原释放，在某些设备上会较慢。
+							 * 所以每次用完便立即调用 dispose 进行释放，下次用时再创建新实例。
+							 */
+							picker.dispose();
+						});
+					}, false);
+				});
+				
+					
+				//通过userId请求所在项目ID和名称
+					var userId = localStorage.getItem("UserId");
+					var projectName = document.getElementById("projectname");
+					mui.ajax(base+'/projectWork/findDate', {
+						data: {
+							'peoId':userId
+						},
+						dataType: 'json',
+						type: 'POST',
+						timeout: 5000,
+						success: function(data) {
+							//{"result":1,"data":登录成功}//返回的json
+//							localStorage.setItem("projectId",data.projectId.toString());
+//							localStorage.setItem("projectName",data.projectName);
+						},
+						error: function(data) {
+							mui.toast("获取失败");
+						}
+					})
+					var localProjectName = localStorage.getItem("selectProjectUpName");
+					if(localProjectName!=""||localProjectName!=null){
+						projectName.innerText=localProjectName;
+					}
+					var reg = document.getElementById("reg");
+					//项目上报字段
+					var projectId = localStorage.getItem("selectProjectUpId");
+					postpeopleName = localStorage.getItem("UserName");
+					postpeople.innerText=postpeopleName;
+					var reporter = document.getElementById("postpeople");
+					var dfmdy = document.getElementById("dfmdy");
+					var zfmdy = document.getElementById("zfmdy");
+					var dsaomiao = document.getElementById("dsaomiao");
+					var zsaomiao = document.getElementById("zsaomiao");
+					var rizhengli = document.getElementById("rizhengli");
+			
+					//上报按钮
+					reg.addEventListener('tap', function() {
+					var time = document.getElementById("postdate");
+					//表单2-3
+					var zzhengli = document.getElementById("zzhengli");
+					var dduibi = document.getElementById("dduibi");
+					var zduibi = document.getElementById("zduibi");
+					var rizhuangding = document.getElementById("rizhuangding");
+					var zzhuangding = document.getElementById("zzhuangding");
+					var jijian = document.getElementById("jijian");
+					var njijian = document.getElementById("njijian");
+					var pzaizhi = document.getElementById("pzaizhi");
+					var pchuqing = document.getElementById("pchuqing");
+					var pnumLeave = document.getElementById("pnumLeave");
+					var pnameLeave = document.getElementById("pnameLeave");
+					var proProblem = document.getElementById("proProblem");
+					var remark = document.getElementById("remark");
+					
+					if(projectName.value=="") {
+						mui.toast("项目名称不能为空");
+						return;
+					}
+					if(time.value=="") {
+						mui.toast("上报日期不能为空");
+						return;
+					}
+					
+					if(!zzhengli){
+						var projectIda = localStorage.getItem("selectProjectUpId");
+							mui.ajax(base+'/projectWork/addProjectWork', {
+						data: {
+							'projectWork.project.id':projectIda,//项目id
+	    					'projectWork.time':time.value,//上报日期
+	    					'projectWork.reporter':postpeopleName,//上报人
+	    					'projectWork.dfmdy':dfmdy.value,//日封面打印页数
+	    					'projectWork.zfmdy':zfmdy.value,//总封面打印页数
+	    					'projectWork.dsaomiao':dsaomiao.value,//日扫描页数
+	    					'projectWork.zsaomiao':zsaomiao.value,//总扫描页数
+	    					'projectWork.rizhengli':rizhengli.value,//日整理卷数
+						},
+						dataType: 'json',
+						type: 'POST',
+						timeout: 5000,
+						success: function(data) {
+							//{"result":1,"data":登录成功}//返回的json
+							if(data.errorMessage!=null&&data.errorMessage.length>0){
+								mui.toast(data.errorMessage.toString());
+							}else{
+							mui.toast("上报成功");
+							mui.back();
+							}
+						},
+						error: function(data) {
+							mui.toast("上报失败(用户权限不足)");
+						}
+					})
+				}
+					
+					else if(!pchuqing){
+						var projectIdb = localStorage.getItem("selectProjectUpId");
+							mui.ajax(base+'/projectWork/addProjectWork', {
+						data: {
+							'projectWork.project.id':projectIdb,//项目id
+	    					'projectWork.time':time.value,//上报日期
+	    					'projectWork.reporter':postpeopleName,//上报人
+	    					'projectWork.dfmdy':dfmdy.value,//日封面打印页数
+	    					'projectWork.zfmdy':zfmdy.value,//总封面打印页数
+	    					'projectWork.dsaomiao':dsaomiao.value,//日扫描页数
+	    					'projectWork.zsaomiao':zsaomiao.value,//总扫描页数
+	    					'projectWork.rizhengli':rizhengli.value,//日整理卷数
+	    					
+	    					'projectWork.zzhengli':zzhengli.value,//总整理卷数
+	    					'projectWork.dduibi':dduibi.value,//日对比页数
+	    					'projectWork.zduibi':zduibi.value,//总对比页数
+	    					'projectWork.rizhuangding':rizhuangding.value,//日装订页数
+	    					'projectWork.zzhuangding':zzhuangding.value,//总装订页数
+	    					'projectWork.jijian':jijian.value,//计件人数
+	    					'projectWork.njijian':njijian.value,//非计件人数
+	    					'projectWork.pzaizhi':pzaizhi.value,//在职人数
+						},
+						dataType: 'json',
+						type: 'POST',
+						timeout: 5000,
+						success: function(data) {
+							//{"result":1,"data":登录成功}//返回的json
+							if(data.errorMessage!=null&&data.errorMessage.length>0){
+								mui.toast(data.errorMessage.toString());
+							}else{
+							window.parent.toast("上报成功");
+							mui.back();
+							}
+						},
+						error: function(data) {
+							mui.toast("上报失败");			
+						}
+					})
+				}
+					else{
+						var projectIdc = localStorage.getItem("selectProjectUpId");
+							mui.ajax(base+'/projectWork/addProjectWork', {
+						data: {
+							'projectWork.project.id':projectIdc,//项目id
+	    					'projectWork.time':time.value,//上报日期
+	    					'projectWork.reporter':postpeopleName,//上报人
+	    					'projectWork.dfmdy':dfmdy.value,//日封面打印页数
+	    					'projectWork.zfmdy':zfmdy.value,//总封面打印页数
+	    					'projectWork.dsaomiao':dsaomiao.value,//日扫描页数
+	    					'projectWork.zsaomiao':zsaomiao.value,//总扫描页数
+	    					'projectWork.rizhengli':rizhengli.value,//日整理卷数
+	    					
+	    					'projectWork.zzhengli':zzhengli.value,//总整理卷数
+	    					'projectWork.dduibi':dduibi.value,//日对比页数
+	    					'projectWork.zduibi':zduibi.value,//总对比页数
+	    					'projectWork.rizhuangding':rizhuangding.value,//日装订页数
+	    					'projectWork.zzhuangding':zzhuangding.value,//总装订页数
+	    					'projectWork.jijian':jijian.value,//计件人数
+	    					'projectWork.njijian':njijian.value,//非计件人数
+	    					'projectWork.pzaizhi':pzaizhi.value,//在职人数
+	    					
+	    					'projectWork.pchuqing':pchuqing.value,//出勤人数
+	    					'projectWork.pnumLeave':pnumLeave.value,//请假人数
+	    					'projectWork.pnameLeave':pnameLeave.value,//请假人姓名
+	    					'projectWork.proProblem':proProblem.value,//项目问题
+	    					'projectWork.remark':remark.value//备注
+						},
+						dataType: 'json',
+						type: 'POST',
+						timeout: 5000,
+						success: function(data) {
+							//{"result":1,"data":登录成功}//返回的json
+							if(data.errorMessage!=null&&data.errorMessage.length>0){
+								mui.toast(data.errorMessage.toString());
+							}else{
+							mui.toast("上报成功");
+							mui.back();
+							}
+						},
+						
+						error: function(data) {
+							mui.toast("上报失败");
+						}
+					})
+					}
+				})//上报按钮的闭合
+		
+				
+				//页卡
+				$('.mui-scroll-wrapper').scroll({
+					indicators: true //是否显示滚动条
+				});
+				var html2 = '<div class="mui-input-row"><label>总整理数:</label><input type="text" id="zzhengli" class="mui-input-clear" placeholder="请输入总整理卷数" required="required"></div><hr>'
+				+'<div class="mui-input-row"><label>日比对页数:</label><input type="text" id="dduibi" class="mui-input-clear" placeholder="请输入日比对页数" required="required"></div><hr>'
+				+'<div class="mui-input-row"><label>总比对页数:</label><input type="text" id="zduibi" class="mui-input-clear" placeholder="请输入总比对页数" required="required"></div><hr>'
+				+'<div class="mui-input-row"><label>日装订页数:</label><input type="text" id="rizhuangding" class="mui-input-clear" placeholder="请输入日装订页数" required="required"></div><hr>'
+				+'<div class="mui-input-row"><label>总装订页数:</label><input type="text" id="zzhuangding" class="mui-input-clear" placeholder="请输入总装订页数" required="required"></div><hr>'
+				+'<div class="mui-input-row"><label>计件人数:</label><input type="text" id="jijian" class="mui-input-clear" placeholder="请输入计件人数" required="required"></div><hr>'
+				+'<div class="mui-input-row"><label>非计件人数:</label><input type="text" id="njijian" class="mui-input-clear" placeholder="请输入非计件人数" required="required"></div><hr>'
+				+'<div class="mui-input-row"><label>在职人数:</label><input type="text" id="pzaizhi" class="mui-input-clear" placeholder="请输入在职人数" required="required"></div><hr>';
+				
+				var html3 = '<div class="mui-input-row"><label>出勤人数:</label><input type="text" id="pchuqing" class="mui-input-clear" placeholder="请输入出勤人数" required="required"></div><hr>'
+				+'<div class="mui-input-row"><label>请假人数:</label><input type="text" id="pnumLeave" class="mui-input-clear" placeholder="请输入请假人数" required="required"></div><hr>'
+				+'<div class="mui-input-row"><label>请假人姓名:</label><input type="text" id="pnameLeave" class="mui-input-clear" placeholder="请输入请假人姓名" required="required"></div><hr>'
+				+'<div class="mui-input-row"><label>项目问题:</label><input type="text" id="proProblem" class="mui-input-clear" placeholder="请输入项目问题" required="required"></div><hr>'
+				+'<div class="mui-input-row"><span style="margin-left:15px;">备注:</span><textarea id="remark" style="text-align: left;height:121px;width:350px;" type="text" id="repassword" class="mui-input-clear" placeholder="说点什么.." required="required"></textarea></div>';
+				var item2 = document.getElementById('item2mobile');
+				var item3 = document.getElementById('item3mobile');
+				document.getElementById('slider').addEventListener('slide', function(e) {
+					if (e.detail.slideNumber === 1) {
+						if (item2.querySelector('.mui-loading')) {
+							setTimeout(function() {
+								item2.querySelector('.mui-scroll').innerHTML = html2;
+							}, 500);
+						}
+					} else if (e.detail.slideNumber === 2) {
+						if (item3.querySelector('.mui-loading')) {
+							setTimeout(function() {
+								item3.querySelector('.mui-scroll').innerHTML = html3;
+							}, 500);
+						}
+					}
+				});
+				var sliderSegmentedControl = document.getElementById('sliderSegmentedControl');
+				$('.mui-input-group').on('change', 'input', function() {
+					if (this.checked) {
+						sliderSegmentedControl.className = 'mui-slider-indicator mui-segmented-control mui-segmented-control-inverted mui-segmented-control-' + this.value;
+						//force repaint
+						sliderProgressBar.setAttribute('style', sliderProgressBar.getAttribute('style'));
+					}
+				});
+			})(mui);
+			
+		</script>
+
+	</body>
+
+</html>

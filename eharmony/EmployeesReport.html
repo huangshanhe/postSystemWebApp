@@ -1,0 +1,557 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>eharmony</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<!--标准mui.css-->
+		<link rel="stylesheet" href="css/mui.min.css">
+		<!--App自定义的css-->
+		<script type="text/javascript" src="js/base.js" ></script>
+		<link rel="stylesheet" type="text/css" href="css/mui.picker.min.css" />
+		<style>
+			.mui-row.mui-fullscreen>[class*="mui-col-"] {
+				margin-top: 1px;
+				height: 100%;
+			}
+			.mui-col-xs-4,
+			.mui-control-content {
+				overflow-y: auto;
+				height: 100%;
+			}
+			.mui-segmented-control .mui-control-item {
+				line-height: 50px;
+				width: 100%;
+			}
+			.mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active {
+				background-color: #fff;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<!--<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>-->
+			<span id="backOne" class="mui-icon mui-icon-left-nav mui-pull-left" style="color: #007AFF;"></span>
+			<h1 class="mui-title">员工产量上报</h1>
+		</header>
+		<div id="whole" class="mui-content mui-row mui-fullscreen">
+			<div class="mui-content-padded1">
+				<button style="border: none;margin-top:3px;margin-left: 150px;"  id='postdate' data-options='{"type":"month","beginYear":2010,"endYear":2026}' class="btn">2017-01</button>
+		    </div>
+			<div class="mui-col-xs-4">
+				<hr style="margin-top: 0px;height:1px;border:none;border-top:1px solid darkgrey;">
+				<div id="segmentedControls" class="mui-segmented-control mui-segmented-control-inverted mui-segmented-control-vertical">
+			</div>
+			</div>
+			<div id="segmentedControlContents" class="mui-col-xs-8" style="border-left: 1px solid #c8c7cc;">
+				<div id="item1" class="mui-control-content mui-active">
+				</div>
+			</div>
+		</div>
+		<script src="js/mui.min.js"></script>
+		<script src="js/mui.picker.min.js"></script>
+		<script src="js/jquery.min.js" ></script>
+		<script src="js/layer.js"></script>
+		<script>
+			mui.init({
+				swipeBack: false //启用右滑关闭功能
+			});
+			//mui('body').on('tap','a',function(){document.location.href=this.href;});//a标签生效
+			mui.plusReady(function(){
+				})
+			
+			//时间选择器
+			(function($) {
+				$.init();
+				var result = $('#result')[0];
+				var btns = $('.btn');
+				btns.each(function(i, btn) {
+					btn.addEventListener('tap', function() {
+						var optionsJson = this.getAttribute('data-options') || '{}';
+						var options = JSON.parse(optionsJson);
+						var id = this.getAttribute('id');
+						/*
+						 * 首次显示时实例化组件
+						 * 示例为了简洁，将 options 放在了按钮的 dom 上
+						 * 也可以直接通过代码声明 optinos 用于实例化 DtPicker
+						 */
+						var picker = new $.DtPicker(options);
+						picker.show(function(rs) {
+							/*
+							 * rs.value 拼合后的 value
+							 * rs.text 拼合后的 text
+							 * rs.y 年，可以通过 rs.y.vaue 和 rs.y.text 获取值和文本
+							 * rs.m 月，用法同年
+							 * rs.d 日，用法同年
+							 * rs.h 时，用法同年
+							 * rs.i 分（minutes 的第二个字母），用法同年
+							 */
+							postdate.innerText = rs.text;
+							postdate.value = rs.text;
+							localStorage.setItem("year",rs.text);
+							var data = rs.text+'-01';
+							localStorage.setItem("searchDate",data);
+							localStorage.setItem("roadFlag","");
+							location.reload();
+							/* 
+							 * 返回 false 可以阻止选择框的关闭
+							 * return false;
+							 */
+							/*
+							 * 释放组件资源，释放后将将不能再操作组件
+							 * 通常情况下，不需要示放组件，new DtPicker(options) 后，可以一直使用。
+							 * 当前示例，因为内容较多，如不进行资原释放，在某些设备上会较慢。
+							 * 所以每次用完便立即调用 dispose 进行释放，下次用时再创建新实例。
+							 */
+							picker.dispose();
+						});
+					}, false);
+				});
+			})(mui);
+			
+			
+			//选择的日期
+			var postdate = document.getElementById("postdate");
+			var year = localStorage.getItem("year");
+			if(year!=null){
+				postdate.innerText=year;
+			}
+			//刷新测试
+//			var test = document.getElementById("test");
+//			test.addEventListener('tap',function(){
+//				location.reload();  
+//			})
+
+			//局部刷新方法(全局监听)	
+			//window.addEventListener('reload', function(msg) {//自定义方法，刷新数据，不刷新页面
+//      	})
+  				
+			//顶部返回上一页按钮
+			var backOne = document.getElementById("backOne");
+			backOne.addEventListener('tap',function(){
+				//var ws =  plus.webview.currentWebview();
+				//plus.webview.close(ws);//关闭当前webView防止下次点击还是这个项目
+				localStorage.setItem("year","2017-01");
+				localStorage.setItem("searchDate","");
+				localStorage.setItem("roadFlag","");
+				mui.openWindow({
+						url: 'EmployeesReportOne.html',
+						id: 'EmployeesReportOne.html'
+					});
+				})	
+				
+			//首先获取项目名称
+			var ProjectName = localStorage.getItem("selectPeopleProjectName");
+			var ProjectId = localStorage.getItem("selectPeopleProjectId");
+			localStorage.setItem("ProjectName",ProjectName);
+			//TAB点击事件id就是当天日期
+			mui('.mui-content').on('tap', 'a', function(e) {
+				var id = this.getAttribute('id');//contentId
+				localStorage.setItem("seId",id);
+  				if(id<99999){//标识不同的List点击事件，员工上报情况不需要以下操作只需要跳转即可故设为999999//以下是左侧列表点击事件
+  				var nowID = this.getAttribute('nowId');
+  				localStorage.setItem("nowSelectData",nowID);//左边列表的第几个ID
+  				var data = this.getAttribute('data');//日期
+  				var projectId = this.getAttribute('projectId');//项目Id
+  				localStorage.setItem("PeopeleUpDate",data);
+  				localStorage.setItem("PeopleUpProjectId",projectId);
+  				var idList = [];
+  				var userList = [];
+  				var stateList = [];
+  				var reportIdList = [];
+  				mui.ajax(base+'/personaldayYield/findPeopleReportStates', {
+						data: {
+							'checkDate':data,
+	    					'personaldayYield.project.id':ProjectId
+						},
+						dataType: 'json',
+						type: 'POST',
+						async: false,
+						timeout: 5000,
+						success: function(data) {
+							for(i=0;i<data.length;i++){
+								idList.push(data[i].people.id);
+								userList.push(data[i].people.name);
+								stateList.push(data[i].reportState);
+								if(data[i].reportState!=false){
+									reportIdList.push(data[i].reportId);
+								}else{
+									reportIdList.push("1");
+								}
+							}
+							//alert(data[0].reportId);
+							//plus.storage.setItem("reportId",data[0].reportId);
+						},
+						error: function(data) {
+						}
+					}
+  				);
+  				start();
+  				//点击生成列表方法
+  				function start(){
+  				//开始生成列表
+  				var contents = document.getElementById("segmentedControlContents");
+  				//人员列表生成
+  				var html = [];
+				html.push('<div id="content' + id + '" class="mui-control-content"><ul class="mui-table-view">');
+				html.push('<li class="mui-table-view-cell">'+'日期:'+data+'</a>'+'</li>');
+				for(j=0;j<userList.length;j++){
+					if(stateList[j]!=false){
+					html.push('<li class="mui-table-view-cell mycss"><a state="'+stateList[j]+'"  reportId="'+reportIdList[j]+'" id="999999" PeopleName="'+userList[j]+'" PeopleId="'+idList[j]+'" selectId="'+j+'" href="#" >'+userList[j]+ '<span class="mui-icon mui-icon-checkmarkempty" style="color:green;"></span>'+'</a>'+'</li>');
+					}else{
+				//局部刷新ID点
+					html.push('<li class="mui-table-view-cell mycss"><a state="'+stateList[j]+'"  id="999999'+j+'" gouID="gou'+j+'" PeopleName="'+userList[j]+'" PeopleId="'+idList[j]+'" selectId="'+j+'" href="#">'+userList[j]+ '<span id="gou'+j+'" class="mui-icon mui-icon-closeempty" style="color:red;"></span>'+'</a>'+'</li>');	
+					}
+				}
+				html.push('</ul></div>');
+  				contents.innerHTML = html.join('');
+  				}
+  				
+  		}else{//点击人员列表
+			var selectId = this.getAttribute('selectId');//选中人员的顺位id
+			var PeopleName = this.getAttribute('PeopleName');//选中员工的姓名
+			var PeopleId = this.getAttribute('PeopleId');//选中员工的ID
+			localStorage.setItem("selectPeopleId",selectId);
+			localStorage.setItem("PeopleName",PeopleName);
+			localStorage.setItem("PeopleId",PeopleId);
+			//跳转
+			var reportState = this.getAttribute('state');//员工上报状态
+			//结束后局部刷新+layerShow
+			//结束后局部刷新
+			var partRefresh = function(){
+					var nowState = localStorage.getItem("selectStateId");
+					var nowGou =  localStorage.getItem("selectGouId");
+					//选中的人顺序
+					var selectSxId = localStorage.getItem("selectPeopleId");
+					//选中的人所在日期和项目ID
+					var thisData = localStorage.getItem("PeopeleUpDate");
+					var thisProject = localStorage.getItem("selectPeopleProjectId");
+					mui.ajax(base+'/personaldayYield/findPeopleReportStates', {
+						data: {
+							'checkDate':thisData,
+	    					'personaldayYield.project.id':thisProject
+						},
+						dataType: 'json',
+						type: 'POST',
+						async: false,
+						timeout: 5000,
+						success: function(data) {
+						var thisReportId = data[selectSxId].reportId;
+						var state =document.getElementById(nowState);//获取点击的人员的id
+						state.setAttribute('state','true');//设状态为true
+						state.setAttribute('reportId',thisReportId);//把reportId传过去
+						},
+						error: function(data) {
+						}
+					}
+				);
+					
+				
+					var gou =document.getElementById(nowGou);//获取点击人员的打勾绿色ID
+					gou.setAttribute('style','color:green;');//设为绿色
+             		gou.setAttribute('class','mui-icon mui-icon-checkmarkempty');//设为勾
+             		//判断一下总勾状态
+//           		var thisYear = localStorage.getItem("thisYear");
+//           		var thisMonth = localStorage.getItem("thisMonth");
+                    var searchDate = localStorage.getItem("searchDate");
+             		mui.ajax(base+'/personaldayYield/findReportStates', {
+						data: {
+							'projectId':thisProject,
+							'checkDate':searchDate
+						},
+						dataType: 'json',
+						type: 'POST',
+						timeout: 5000,
+						success: function(data) {
+						var nowSelectId = localStorage.getItem("nowSelectData");//左边总勾的顺序ID
+						if(data[nowSelectId].state!=false){
+						var toString = "zg"+nowSelectId;
+						var nowSelectDataId = document.getElementById(toString);
+             			nowSelectDataId.setAttribute('style','color:green;');//设为绿色
+             			nowSelectDataId.setAttribute('class','mui-icon mui-icon-checkmarkempty');//设为勾	
+							}
+						},
+						error: function(data) {
+						}
+					}
+				);
+			}
+			
+			var ifPartRefresh = function(){
+				var ifRefresh = localStorage.getItem("ifRefresh");
+				if(ifRefresh=="yes"){
+					partRefresh();
+				}else{//只是返回不变成勾
+					localStorage.setItem("ifRefresh","no");
+				}
+				localStorage.setItem("ifRefresh","no");
+			}
+			//弹出框layerShow
+	  		var layer_show = function(url,width,height){
+			layer.open({
+				type:2,
+				title:false,
+				content:url,
+				shadeClose:false,
+				shade:0.2,
+				maxmin: false,
+				closeBtn:0,
+				area: [width, height],
+				end:function(){
+					ifPartRefresh();//关闭layer,刷新方法
+				}
+			})
+		};
+		
+			if(reportState!="false"){
+				var reportId = this.getAttribute('reportId');//选中员工的reportId
+				localStorage.setItem("reportId",reportId);
+				layer_show("personEmployeesReport.html","100%","100%");
+//				mui.openWindow({
+//				url: 'personEmployeesReport.html',
+//				id: 'personEmployeesReport'
+//				});
+				
+			}else{
+				//开始局部刷新
+				var stateId = this.getAttribute('id');//a的id
+				localStorage.setItem("selectStateId",stateId);
+				var gouId = this.getAttribute('gouID');//勾的ID
+				localStorage.setItem("selectGouId",gouId);
+				layer_show("personEmployeesReportPost.html","100%","100%");
+//				mui.openWindow({
+//				url: 'personEmployeesReportPost.html',
+//				id: 'personEmployeesReportPost.html'
+//				});
+			}
+  		}
+	});
+			
+			
+			
+				var userId = localStorage.getItem("UserId");//admin1的ID
+					//获取日期
+					mui.ajax(base+'/projectWork/findDate', {
+						data: {
+							'peoId':userId
+						},
+						dataType: 'json',
+						type: 'POST',
+						timeout: 5000,
+						success: function(data) {
+						//work数据获取
+						//plus.storage.setItem("selectProjectName",data.projectName);
+						var thisYear = data.thisYear.toString();
+						var thisMonth = data.thisMonth.toString();
+						var firstDate = thisYear+'-'+thisMonth+'-01';
+						var first = thisYear+'-'+thisMonth;
+						var searchDate = localStorage.getItem("searchDate");
+						if(searchDate==""||searchDate==null){
+							localStorage.setItem("searchDate",firstDate);
+							searchDate=firstDate;
+							var postdate = document.getElementById("postdate");
+							postdate.innerText=first;
+						}
+				var dataList = [];
+				//获取项目全部日期
+				var roadFlag = localStorage.getItem("roadFlag");
+			//如果已经加载过
+//			if(roadFlag=="roaded"){
+//			//重新获取proId
+//			var ProjectName = localStorage.getItem("selectPeopleProjectName");
+//			var ProjectId = localStorage.getItem("selectPeopleProjectId");
+//				var getStr = localStorage.getItem("localData");
+//				var data = JSON.parse(getStr);
+//				//开始赋值
+//				var stateList = [];
+//							for(j=0;j<data.length;j++){
+//								if(data[j].state!=false){
+//									stateList.push("a");
+//								}else{
+//									stateList.push("b");
+//								}
+//							}
+//							for(i=0;i<data.length;i++){
+//							dataList.push(data[i].recordTime);
+//							}
+//							var weekDay = [];
+//							for(k=0;k<data.length;k++){
+//							weekDay.push(data[k].weekDay);
+//							}
+//			//左侧选项卡
+//			var controls = document.getElementById("segmentedControls");
+//			var html = [];
+//			var i = 0,
+//				j = 1,
+//				m = dataList.length, //左侧选项卡数量
+//				n = 8; //每个选项卡列表数量
+//			for (; i < m; i++) {
+//				if(stateList[i]!="b"){
+//					html.push('<a data="'+dataList[i]+'" id="'+i+'" nowId="'+i+'" projectId="'+ProjectId+'" class="mui-control-item" href="#content' + i + '">'+dataList[i]+ '<span class="mui-icon mui-icon-checkmarkempty" style="color:green;"></span>'+'</a>');
+//				}else{
+//					html.push('<a data="'+dataList[i]+'" id="'+i+'" nowId="'+i+'" projectId="'+ProjectId+'" class="mui-control-item" href="#content' + i + '">'+dataList[i]+  '<span id="zg'+i+'" class="mui-icon mui-icon-closeempty" style="color:red;"></span>'+'</a>');
+//				}
+//			}
+//			controls.innerHTML = html.join('');
+////   history.replaceState({},"员工产量上报","EmployeesReport.html");
+//			//自动选中并勾上
+//			var nowState = localStorage.getItem("nowSelectData");//选中的是左边第几个item
+//			var selected = document.getElementById(nowState);
+//			selected.setAttribute('class','mui-control-item mui-active');//选中
+//			
+//			//var href=document.getElementById(nowState).href;
+////			var abc = document.getElementById("content5");
+////			alert(abc);
+////			abc.setAttribute('class','mui-control-content mui-active');//选中内容展示
+//			//a标签
+////			
+////		jQuery(function($) {
+////			$("#zg6").click();
+////		});
+//			
+//			//选中以后触发的事
+//			var id = localStorage.getItem("seId");
+//			var ProjectId = localStorage.getItem("selectPeopleProjectId");//项目ID
+//			var nowID = localStorage.getItem("nowSelectData");
+//			var data = localStorage.getItem("PeopeleUpDate");
+//			var projectId = localStorage.getItem("PeopleUpProjectId");
+//				localStorage.setItem("nowSelectData",nowID);//左边列表的第几个ID
+//				localStorage.setItem("PeopeleUpDate",data);
+//				localStorage.setItem("PeopleUpProjectId",projectId);
+//				var idList = [];
+//				var userList = [];
+//				var stateList = [];
+//				var reportIdList = [];
+//				mui.ajax(base+'/personaldayYield/findPeopleReportStates', {
+//						data: {
+//							'checkDate':data,
+//	    					'personaldayYield.project.id':ProjectId
+//						},
+//						dataType: 'json',
+//						type: 'POST',
+//						async: false,
+//						timeout: 5000,
+//						success: function(data) {
+//							for(i=0;i<data.length;i++){
+//								idList.push(data[i].people.id);
+//								userList.push(data[i].people.name);
+//								stateList.push(data[i].reportState);
+//								if(data[i].reportState!=false){
+//									reportIdList.push(data[i].reportId);
+//								}else{
+//									reportIdList.push("1");
+//								}
+//							}
+//							//alert(data[0].reportId);
+//							//plus.storage.setItem("reportId",data[0].reportId);
+//						},
+//						error: function(data) {
+//						}
+//					});
+//				startOne();
+//				//点击生成列表方法
+//				function startOne(){
+//				//开始生成列表
+//				var mcontent = document.getElementById("segmentedControlContents");
+//				//人员列表生成
+//				var html = [];
+//				var id = localStorage.getItem("nowSelectData");
+//			    var data = localStorage.getItem("PeopeleUpDate");
+//				html.push('<div id="content' + id + '" class="mui-control-content"><ul class="mui-table-view">');
+//				html.push('<li class="mui-table-view-cell">'+'日期:'+data+'</a>'+'</li>');
+//				for(j=0;j<userList.length;j++){
+//					if(stateList[j]!=false){
+//					html.push('<li class="mui-table-view-cell mycss"><a state="'+stateList[j]+'"  reportId="'+reportIdList[j]+'" id="999999" PeopleName="'+userList[j]+'" PeopleId="'+idList[j]+'" selectId="'+j+'" href="#" >'+userList[j]+ '<span class="mui-icon mui-icon-checkmarkempty" style="color:green;"></span>'+'</a>'+'</li>');
+//					}else{
+//				//局部刷新ID点
+//					html.push('<li class="mui-table-view-cell mycss"><a state="'+stateList[j]+'"  id="999999'+j+'" gouID="gou'+j+'" PeopleName="'+userList[j]+'" PeopleId="'+idList[j]+'" selectId="'+j+'" href="#">'+userList[j]+ '<span id="gou'+j+'" class="mui-icon mui-icon-closeempty" style="color:red;"></span>'+'</a>'+'</li>');	
+//					}
+//				}
+//				html.push('</ul></div>');
+//				mcontent.innerHTML = html.join('');
+//				}
+//				
+//	//第二级的LIST开始读取缓存		
+//			
+//			
+////			alert("自动点击");
+////			var tt = document.getElementById("3");
+////			tt.click();
+//				
+//				}else{//如果没加载过，重新加载
+					var ProjectId = localStorage.getItem("selectPeopleProjectId");
+					mui.ajax(base+'/personaldayYield/findReportStates', {
+						data: {
+							'projectId':ProjectId,
+							'checkDate':searchDate
+						},
+						dataType: 'json',
+						type: 'POST',
+						timeout: 5000,
+						success: function(data) {
+							//开始缓存数组
+							localStorage.setItem("roadFlag","roaded");//表示已经加载过了
+							var setStr = JSON.stringify(data);
+							localStorage.setItem("localData",setStr);
+
+							var stateList = [];
+							for(j=0;j<data.length;j++){
+								if(data[j].state!=false){
+									stateList.push("a");
+								}else{
+									stateList.push("b");
+								}
+							}
+							for(i=0;i<data.length;i++){
+							dataList.push(data[i].recordTime);
+							}
+							var weekDay = [];
+							for(k=0;k<data.length;k++){
+							weekDay.push(data[k].weekDay);
+							}
+			//左侧选项卡
+			var controls = document.getElementById("segmentedControls");
+			var html = [];
+			var i = 0,
+				j = 1,
+				m = dataList.length, //左侧选项卡数量
+				n = 8; //每个选项卡列表数量
+			for (; i < m; i++) {
+				if(stateList[i]!="b"){
+					html.push('<a data="'+dataList[i]+'" id="'+i+'" nowId="'+i+'" projectId="'+ProjectId+'" class="mui-control-item" href="#content' + i + '">'+dataList[i]+ '<span id="'+i+'" class="mui-icon mui-icon-checkmarkempty" style="color:green;"></span>'+'</a>');
+				}else{
+					html.push('<a data="'+dataList[i]+'" id="'+i+'" nowId="'+i+'" projectId="'+ProjectId+'" class="mui-control-item" href="#content' + i + '">'+dataList[i]+  '<span id="zg'+i+'" class="mui-icon mui-icon-closeempty" style="color:red;"></span>'+'</a>');
+				}
+			}
+			controls.innerHTML = html.join('');
+			//显示与隐藏
+//			alert("隐藏整个页面");
+//			document.getElementById("whole").style.display="none";
+//			alert("显示整个页面");
+//			document.getElementById("whole").style.display="block";
+			//设置active测试
+//			var test = document.getElementById("3");
+//			test.setAttribute('class','mui-active');//
+			 //默认选中第一个
+//			controls.querySelector('.mui-control-item').classList.add('mui-active');
+//			var contents = document.getElementById("segmentedControlContents");
+//			contents.querySelector('.mui-control-content').classList.add('mui-active');
+						},
+						error: function(data) {
+						}
+					})
+					
+		//}//未加载闭合			
+					
+						},
+						error: function(data) {
+						}
+					})
+		
+		</script>
+	</body>
+</html>

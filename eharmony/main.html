@@ -1,0 +1,216 @@
+﻿<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>eharmony</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<script src="js/base.js" ></script>
+		<style type="text/css">
+			html,
+			body {
+				background-color: #efeff4;
+			}
+			
+			p {
+				text-indent: 3px;
+			}
+			
+			span.mui-icon {
+				font-size: 14px;
+				color: #007aff;
+				margin-left: -15px;
+				padding-right: 10px;
+			}
+			
+			.mui-off-canvas-left {
+				color: #fff;
+			}
+			
+			.title {
+				margin: 35px 15px 10px;
+			}
+			
+			.title+.content {
+				margin: 10px 15px 35px;
+				color: #bbb;
+				text-indent: 1em;
+				font-size: 14px;
+				line-height: 24px;
+			}
+			
+			input {
+				color: #000;
+			}
+			
+			.mui-content {
+				margin-top: 5px;
+			}
+			
+			.mui-content-padded {
+				margin-top: -20px;
+			}
+			
+			.mui-content-padded1 {
+				margin-top: 12px;
+			}
+			
+			.mui-content-padded3 span{
+				margin-left: 10px;
+			}
+			.mui-btn {
+				margin-top: 10px;
+				margin-left: 10px;
+			}
+		</style>
+	</head>
+
+	<body ng-app="infoApp" ng-controller="controller">
+		<div id="offCanvasWrapper" class="mui-off-canvas-wrap mui-draggable mui-scalable <!--mui-scalable-->">
+			<!--侧滑菜单部分-->
+			<aside id="offCanvasSide" class="mui-off-canvas-left">
+				<div id="offCanvasSideScroll" class="mui-scroll-wrapper">
+					<div class="mui-scroll">
+						<div class="title">个人中心</div>
+						<div class="content">
+							<img  style="margin-left: -10px;" src="img/tx.png"/>
+						</div>
+							<div class="mui-content-padded">
+								<div class="title" style="margin-bottom: 5px;"><span ng-bind="userName"></span></div>
+							<h5 style="color:#CF2D28;text-align:left;">
+					 <button ng-click="update()" type="button" style="margin-left: 5px;" id="changeuserinfo" class="mui-btn mui-btn-green">修改信息</button>
+		        <button ng-click="loginout()" type="button"  id="loginout" class="mui-btn mui-btn-danger">退出登录</button>
+		        </h5>
+		    	</div>
+						<ul class="mui-table-view mui-table-view-chevron mui-table-view-inverted">
+							<li class="mui-table-view-cell">
+								<a class="mui-navigate-right" href="projectUpOne.html">
+									项目产量上报
+								</a>
+							</li>
+							<li class="mui-table-view-cell">
+								<a class="mui-navigate-right" href="projectUpSearchOne.html">
+									产量查看
+								</a>
+							</li>
+							<li class="mui-table-view-cell">
+								<a class="mui-navigate-right" href="EmployeesReportOne.html">
+									员工产量上报
+								</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</aside>
+			<!--主界面部分-->
+			<div class="mui-inner-wrap">
+				<header class="mui-bar mui-bar-nav">
+					<a id="left" href="#offCanvasSide" class="mui-icon mui-action-menu mui-icon-bars mui-pull-left"></a>
+					<h1 class="mui-title">杭州网新颐和科技有限公司</h1>
+				</header>
+
+				<div id="offCanvasContentScroll" class="mui-content mui-scroll-wrapper">
+			<div class="mui-scroll">
+					
+		    	<!--12宫格-->
+				<div class="mui-content-padded3">
+		        <ul class="mui-table-view mui-grid-view mui-grid-9">
+		        	<li  id="projectup" class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3"><a href="projectUpOne.html">
+		                    <span class="mui-icon mui-icon-compose"></span>
+		                    <div class="mui-media-body" style="font-size: 13px;">项目产量上报</div></a></li>
+		            <li id="more" class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3"><a href="projectUpSearchOne.html">
+		                    <span class="mui-icon mui-icon-search"></span>
+		                    <div class="mui-media-body" style="font-size: 13px;">产量查看</div></a></li>
+		            <li id="projectpeopleup" class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3"><a href="EmployeesReportOne.html">
+		                    <span class="mui-icon mui-icon-upload"></span>
+		                    <div class="mui-media-body" style="font-size: 13px;">员工产量上报</div></a></li>
+		           <li ng-click="showMessage()" id="confirmBtn" class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3"><a href="#">
+		                    <span class="mui-icon mui-icon-redo"></span>
+		                    <div class="mui-media-body" style="font-size: 13px;">定位签到</div></a></li>
+
+		            <li ng-click="showMessage()" id="more1" class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3"><a href="#">
+		                    <span class="mui-icon mui-icon-email"><span class="mui-badge">5</span></span>
+		                    <div class="mui-media-body" style="font-size: 13px;">个人邮件</div></a></li>
+		            <li ng-click="showMessage()" id="more2" class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3"><a href="#">
+		                    <span class="mui-icon mui-icon-phone"></span>
+		                    <div class="mui-media-body" style="font-size: 13px;">联系电话</div></a></li>
+		            <li ng-click="showMessage()" id="more3" class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3"><a href="#">
+		                    <span class="mui-icon mui-icon-gear"></span>
+		                    <div class="mui-media-body" style="font-size: 13px;">系统设置</div></a></li>
+		            <li ng-click="showMessage()" id="more4"class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3"><a href="#">
+		                    <span class="mui-icon mui-icon-info"></span>
+		                    <div class="mui-media-body" style="font-size: 13px;">关于我们</div></a></li>
+		           <li ng-click="showMessage()" id="more5" class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3"><a href="#">
+		                    <span class="mui-icon mui-icon-more"></span>
+		        			<div class="mui-media-body" style="font-size: 13px;">更多。。</div></a></li>
+		        </ul> 
+		        </div>
+			</div>
+
+			</div>
+				<!-- off-canvas backdrop -->
+				<div class="mui-off-canvas-backdrop"></div>
+			</div>
+		</div>
+
+		<script src="js/mui.min.js"></script>
+		<script src="js/app.js"></script>
+		<script src="js/angular.min.js" ></script>
+		<script type="text/javascript">
+			mui.init()
+			mui('.mui-scroll-wrapper').scroll({
+				deceleration: 0.0005 //flick 减速系数，系数越大，滚动速度越慢，滚动距离越小，默认值0.0006
+			});
+			mui('body').on('tap','a',function(){document.location.href=this.href;});//a标签
+			mui.plusReady(function() {
+				//初始用户名赋值
+				var name = document.getElementById("name");
+			})
+			
+			
+var app = angular.module('infoApp', []);
+app.controller('controller', function ($scope,$http) {
+	//给用户名赋值
+	var username = localStorage.getItem("UserName");
+	$scope.userName = username;
+	//即将上线，敬请期待！
+	$scope.showMessage = function(){
+		mui.toast("即将上线，敬请期待！");
+	}
+	//修改信息
+	$scope.update = function(){
+		mui.openWindow({
+					url:'changeuserinfo.html',
+					id:'changeuserinfo.html'
+				})
+	}
+	//注销
+	$scope.loginout = function(){
+		mui.toast("注销成功");
+		mui.openWindow({
+					url:'login.html',
+					id:'login.html'
+				})
+	}
+	//尝试用MUI请求
+//	var UserId =  localStorage.getItem("UserId");
+//	mui.ajax(base+'/project/findProjectByUserId', {
+//						data: {
+//							'userId':UserId
+//						},
+//						dataType: 'json',
+//						async:false,
+//						type: 'POST',
+//						timeout: 5000,
+//						success: function(data) {
+//							alert(data[0].name);
+//						}
+//				})
+	
+})
+		</script>
+	</body>
+</html>

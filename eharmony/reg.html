@@ -1,0 +1,113 @@
+﻿<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>eharmony</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<script src="js/mui.min.js"></script>
+		<script type="text/javascript">
+			mui.init()
+			mui.plusReady(function(){
+				var username=document.getElementById("username");
+				var password=document.getElementById("password");
+				var repwd=document.getElementById("repassword");
+				var phone=document.getElementById("phone");
+				var reg=document.getElementById("reg");
+				reg.addEventListener('tap',function(){
+					if(username.value.length==0){
+						plus.ui.toast("用户名不能为空");
+						return;
+					}
+					
+					if(password.value.length==0){
+						plus.ui.toast("密码不能为空");
+						return;
+					}
+						if(repwd.value.length==0){
+						plus.ui.toast("重复密码不能为空");
+						return;
+					}
+					
+					if(password.value!=repwd.value){
+						plus.ui.toast("两次输入的密码不同");
+						return;
+					}
+					if(phone.value.length==0){
+						plus.ui.toast("联系方式不能为空");
+						return;
+					}
+					plus.ui.toast("注册成功");
+					mui.back();
+//					mui.ajax('www.baidu.com',{
+//						data:{
+//							username:username.value,
+//							password:password.value,
+//							phone:phone.value;
+//						},
+//						dataType:'json',
+//						type:'POST',
+//						timeout:10000,
+//					    success:function(data){
+//					    	//处理返回的数据
+//					    	//{'result':1,'data':"注册成功"}
+//					    	if(data.result==1){
+//					    		plus.ui.toast(data.data);
+//					    		mui.back();
+//					    	}else{
+//					    		plus.ui.toast(data.data);
+//					    	}
+//					    },
+//					    error:function(){
+//					    	//error
+//					    }
+//					    
+//					})
+				})
+			})
+		</script>
+		<style type="text/css">
+				.mui-content {
+				margin-top: 12px;
+			}
+			
+			.mui-btn {
+				width: 95%;
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">注册</h1>
+		</header>
+		<div class="mui-content">
+			<form class="mui-input-group">
+				<div class="mui-input-row">
+					<label>帐号</label>
+					<input type="text" id="username" class="mui-input-clear" placeholder="请输入帐号" required="required"    
+						placeholder="4 <> 10" pattern="[A-Za-z]{4,10}" autofocus="autofocus" >
+				</div>
+				<div class="mui-input-row">
+					<label>密码</label>
+					<input type="password" id="password" class="mui-input-clear" placeholder="请输入密码" required="required">
+				</div>
+				<div class="mui-input-row">
+					<label>重复密码</label>
+					<input type="password" id="repassword" class="mui-input-clear" placeholder="确保和上次输入密码一致" required="required">
+				</div>
+				<div class="mui-input-row">
+					<label>联系方式</label>
+					<input type="text" id="phone" class="mui-input-clear" placeholder="请输入您的联系方式" required="required">
+				</div>
+			</form>
+			<div class="mui-content-padded" align="center">
+				<button type="button" id="reg" class="mui-btn mui-btn-blue">注册</button>
+			</div>
+
+		</div>
+
+	</body>
+
+</html>

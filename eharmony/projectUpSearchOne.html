@@ -1,0 +1,181 @@
+﻿<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>eharmony</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<!--标准mui.css-->
+		<link rel="stylesheet" href="css/mui.min.css">
+		<!--App自定义的css-->
+		<link rel="stylesheet" type="text/css" href="css/app.css" />
+		<link rel="stylesheet" type="text/css" href="css/mui.picker.min.css" />
+		<script type="text/javascript" src="js/base.js" ></script>
+		<script type="text/javascript" src="js/angular-1.0.1.min.js" ></script>
+		<script type="text/javascript" src="js/jquery.min.js"></script>
+	</head>
+	<style type="text/css">
+			html,
+			body {
+				background-color: #efeff4;
+			}
+			
+			p {
+				text-indent: 3px;
+			}
+			
+			span.mui-icon {
+				font-size: 14px;
+				color: #007aff;
+				margin-left: -15px;
+				padding-right: 10px;
+			}
+			
+			.mui-off-canvas-left {
+				color: #fff;
+			}
+			
+			.title {
+				margin: 35px 15px 10px;
+			}
+			
+			.title+.content {
+				margin: 10px 15px 35px;
+				color: #bbb;
+				text-indent: 1em;
+				font-size: 14px;
+				line-height: 24px;
+			}
+			
+			input {
+				color: #000;
+			}
+			
+			.mui-content {
+				margin-top: 5px;
+			}
+			
+			.mui-content-padded {
+				margin-top: -20px;
+			}
+			
+			.mui-content-padded1 {
+				margin-top: 12px;
+			}
+			
+			.mui-content-padded3 span{
+				margin-left: 10px;
+			}
+			.mui-btn {
+				margin-top: 10px;
+				margin-left: 10px;
+			}
+		</style>
+	<body ng-app="infoApp" ng-controller="controller">
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">已上报项目产量查看</h1>
+		</header>
+	<div class="mui-content">
+			
+	<!--9宫格-->
+	<div class="mui-content-padded3">
+				<div class="mui-input-row mui-search" style="height: 40px;">
+					<input type="search" ng-model="search" style="background-color:lightblue;" class="mui-input-clear" placeholder="项目名称">
+				</div>
+		        <ul class="mui-table-view mui-grid-view mui-grid-9" >
+		        	<li id="aaa" class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-4" ng-repeat="item in findProject|filter:search">
+		        		<a id="{{item.id}}" href="projectUpSearch.html">
+							<span class="mui-icon mui-icon-compose"></span>
+							<div class="mui-media-body" style="font-size: 13px;">{{item.name}}</div>
+		        		</a>
+		        	</li>
+		        </ul> 
+	</div>
+	</div>
+		<script src="js/mui.min.js"></script>
+		<script>
+			mui.init({
+				swipeBack:true //启用右滑关闭功能
+			});
+			mui('body').on('tap','a',function(){document.location.href=this.href;});//a标签
+			//mui
+		mui.plusReady(function(){
+			
+			})
+		//a点击获取id
+		mui('.mui-content').on('tap', 'a', function(e) {
+  		var id = this.getAttribute('id');
+  		localStorage.setItem("selectProjectId",id);
+//		mui.openWindow({
+//				url: 'projectUpSearch.html',
+//				id: 'projectUpSearch'
+//			});
+		});
+				var userId = localStorage.getItem("UserId");
+					//获取日期
+					mui.ajax(base+'/projectWork/findDate', {
+						data: {
+							'peoId':userId
+						},
+						dataType: 'json',
+						type: 'POST',
+						timeout: 5000,
+						success: function(data) {
+							if(data.sessionState=="SO100-001"){
+							var ws =  plus.webview.currentWebview();
+//							plus.webview.close(ws);//关闭当前webview
+//							plus.storage.setItem("IsAutoLogin","1");
+							mui.toast("session已过期");
+							mui.openWindow({
+							url: 'login.html',
+							id: 'login.html'
+								});
+							}
+						},
+						error: function(data) {
+						}
+					})
+			
+			
+//angular
+/**
+ * Created by hsh on 2016/8/19.
+ */
+//angularjs post 提交时HTTP头设置
+var transform = function (data) {
+    return $.param(data);
+}, postCfg = {
+    headers: {
+        'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+    },
+    transformRequest: transform
+};
+
+var app = angular.module('infoApp', []);
+app.controller('controller', function ($scope,$http) {
+	$scope.findProject = [{"id":170,"name":""}];
+	var UserId =  localStorage.getItem("UserId");
+	//获取projectId
+	//通过reportId获取信息(结果延迟处理)
+	setTimeout(
+		function post(){
+		var findProject = {
+		'userId':UserId
+	 	}
+		$http.post(base+'/project/findProjectByUserId',findProject,postCfg)
+	    	.success(function(data){
+	    		if(data[0].id>0){
+	    		$scope.findProject = data;
+	    		}
+	    	});
+	    },6
+		);
+		
+	});			
+		</script>
+	</body>
+</html>
