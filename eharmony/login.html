@@ -91,7 +91,7 @@ var transform = function (data) {
 
 var app = angular.module('infoApp', []);
 app.controller('controller', function ($scope,$http) {
-	//清楚所有的缓存
+	//清除所有的缓存
 	localStorage.clear();
 			//登录按钮
 			$scope.login = function(){
@@ -107,7 +107,7 @@ app.controller('controller', function ($scope,$http) {
 			}
 			$scope.loginDate = {
 				account:account,
-				password: $.md5(password)
+				password: $.md5(password)//md5加密
 			}
 				$http.post(base+'/sys/login',$scope.loginDate,postCfg)
 			     .success(function(data){
