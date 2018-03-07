@@ -74,7 +74,7 @@
 			</div>
 		</div>
 	</body>
-		<script type="text/javascript" charset="utf-8">
+<script type="text/javascript" charset="utf-8">
 //angular
 /**
  * Created by hsh on 2016/8/19.
@@ -93,48 +93,48 @@ var app = angular.module('infoApp', []);
 app.controller('controller', function ($scope,$http) {
 	//清除所有的缓存
 	localStorage.clear();
-			//登录按钮
-			$scope.login = function(){
-			var account = document.getElementById("account").value;//帐号
+		//登录按钮
+		$scope.login = function(){
+		var account = document.getElementById("account").value;//帐号
 	        var password = document.getElementById("password").value;//密码
 	        if(account.length == 0) {
-						mui.toast("用户名不能为空");
-						return;
+			mui.toast("用户名不能为空");
+			return;
+		}
+		if(password.length == 0) {
+			mui.toast("密码不能为空");
+			return;
+		}
+		$scope.loginDate = {
+			account:account,
+			password: $.md5(password)//md5加密
+		}
+		$http.post(base+'/sys/login',$scope.loginDate,postCfg)
+	        .success(function(data){
+			if(data==null||data==""){
+				mui.toast("登录成功");
+				$scope.data={}
+				$http.post(base+'/sessionManager/findCurrentUser',$scope.data,postCfg)
+				.success(function(data){
+					localStorage.setItem("UserName",data.name);//帐号
+					localStorage.setItem("UserAccount",data.account)
+					localStorage.setItem("UserId", data.id.toString());
+					//mui.fire(plus.webview.getWebviewById('main'), 'reName', null);
+					$scope.toMain();
+				});
+
+			}else{
+				mui.toast("登录失败");
 			}
-			if(password.length == 0) {
-						mui.toast("密码不能为空");
-						return;
-			}
-			$scope.loginDate = {
-				account:account,
-				password: $.md5(password)//md5加密
-			}
-				$http.post(base+'/sys/login',$scope.loginDate,postCfg)
-			     .success(function(data){
-			     	if(data==null||data==""){
-			     		mui.toast("登录成功");
-			     		$scope.data={}
-			     		$http.post(base+'/sessionManager/findCurrentUser',$scope.data,postCfg)
-			     		.success(function(data){
-			     			localStorage.setItem("UserName",data.name);//帐号
-			     			localStorage.setItem("UserAccount",data.account)
-							localStorage.setItem("UserId", data.id.toString());
-							//mui.fire(plus.webview.getWebviewById('main'), 'reName', null);
-							$scope.toMain();
-			     		});
-			     		
-			     	}else{
-			     		mui.toast("登录失败");
-			     	}
-			     });
-			}
-			//跳转到主页
-			$scope.toMain = function(){
-				mui.openWindow({
-					url:'main.html',
-					id:'main.html'
-				})
-			}
+		     });
+		}
+		//跳转到主页
+		$scope.toMain = function(){
+			mui.openWindow({
+				url:'main.html',
+				id:'main.html'
+			})
+		}
 	})
-		</script>
+</script>
 </html>
